@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Exchange Rate Logs</h2>
+<table class="table table-striped">
+  <tr>
+    <th>Base</th>
+    <th>Target</th>
+    <th>Rate</th>
+    <th>Timestamp</th>
+  </tr>
+  {% for log in logs %}
+  <tr>
+    <td>{{ log.base_currency }}</td>
+    <td>{{ log.target_currency }}</td>
+    <td>{{ log.rate }}</td>
+    <td>{{ log.timestamp }}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}

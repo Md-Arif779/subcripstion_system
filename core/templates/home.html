@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container mt-4">
+  <div class="row mb-4">
+    <div class="col-md-12">
+      <h4>
+        Latest USD to BDT Exchange Rate:
+        {% if latest_rate %}
+          <strong>1 USD = {{ latest_rate.rate }} BDT</strong><br>
+          <small class="text-muted">Updated: {{ latest_rate.fetched_at|date:"Y-m-d H:i" }}</small>
+        {% else %}
+          <em class="text-danger">Exchange rate not available yet.</em>
+        {% endif %}
+      </h4>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col-md-12 d-flex justify-content-between align-items-center">
+      <h2>All Subscriptions</h2>
+      <a href="{% url 'create_subscription' %}" class="btn btn-primary btn-sm">+ Create New</a>
+    </div>
+  </div>
+
+  <table class="table table-bordered table-striped">
+    <thead class="table-light">
+      <tr>
+        <th>Username</th>
+        <th>Plan Name</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th>Price (USD)</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for subscription in subscriptions %}
+        <tr>
+          <td>{{ subscription.user.username }}</td>
+          <td>{{ subscription.plan.name }}</td>
+          <td>{{ subscription.start_date|date:"Y-m-d H:i" }}</td>
+          <td>{{ subscription.end_date|date:"Y-m-d H:i" }}</td>
+          <td>{{ subscription.plan.price }}</td>
+          <td>{{ subscription.status|title }}</td>
+          <td>
+            <a href="{% url 'edit_subscription' subscription.id %}" class="btn btn-sm btn-warning">Edit</a>
+            <a href="{% url 'delete_subscription' subscription.id %}" class="btn btn-sm btn-danger">Delete</a>
+          </td>
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="7" class="text-center text-muted">No subscriptions found.</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}
+
+
+
+
+
+
